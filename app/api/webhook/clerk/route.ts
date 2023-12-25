@@ -56,10 +56,10 @@ export async function POST(req: Request) {
   const eventType = evt.type;
 
   if (eventType === "user.created") {
+    console.log("user created");
+
     const { id, email_addresses, image_url, first_name, last_name, username } =
       evt.data;
-
-    console.log("works 1");
 
     const user = {
       clerkId: id,
@@ -112,5 +112,6 @@ export async function POST(req: Request) {
     return NextResponse.json({ message: "OK", user: deletedUser });
   }
 
+  console.log("webhook works");
   return new Response("", { status: 200 });
 }
