@@ -56,8 +56,6 @@ export async function POST(req: Request) {
   const eventType = evt.type;
 
   if (eventType === "user.created") {
-    console.log("user created");
-
     const { id, email_addresses, image_url, first_name, last_name, username } =
       evt.data;
 
@@ -70,11 +68,7 @@ export async function POST(req: Request) {
       photo: image_url,
     };
 
-    console.log("works 2");
-
     const newUser = await createUser(user);
-
-    console.log("works 3");
 
     if (newUser) {
       await clerkClient.users.updateUserMetadata(id, {
@@ -83,8 +77,6 @@ export async function POST(req: Request) {
         },
       });
     }
-
-    console.log("works 4");
 
     return NextResponse.json({ message: "OK", user: newUser });
   }
@@ -112,6 +104,5 @@ export async function POST(req: Request) {
     return NextResponse.json({ message: "OK", user: deletedUser });
   }
 
-  console.log("webhook works");
   return new Response("", { status: 200 });
 }
