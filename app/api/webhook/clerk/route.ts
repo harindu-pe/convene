@@ -55,54 +55,62 @@ export async function POST(req: Request) {
   const { id } = evt.data;
   const eventType = evt.type;
 
-  // if (eventType === "user.created") {
-  //   const { id, email_addresses, image_url, first_name, last_name, username } =
-  //     evt.data;
+  if (eventType === "user.created") {
+    const { id, email_addresses, image_url, first_name, last_name, username } =
+      evt.data;
 
-  //   const user = {
-  //     clerkId: id,
-  //     email: email_addresses[0].email_address,
-  //     username: username!,
-  //     firstName: first_name,
-  //     lastName: last_name,
-  //     photo: image_url,
-  //   };
+    console.log("works 1");
 
-  //   const newUser = await createUser(user);
+    const user = {
+      clerkId: id,
+      email: email_addresses[0].email_address,
+      username: username!,
+      firstName: first_name,
+      lastName: last_name,
+      photo: image_url,
+    };
 
-  //   if (newUser) {
-  //     await clerkClient.users.updateUserMetadata(id, {
-  //       publicMetadata: {
-  //         userId: newUser._id,
-  //       },
-  //     });
-  //   }
+    console.log("works 2");
 
-  //   return NextResponse.json({ message: "OK", user: newUser });
-  // }
+    const newUser = await createUser(user);
 
-  // if (eventType === "user.updated") {
-  //   const { id, image_url, first_name, last_name, username } = evt.data;
+    console.log("works 3");
 
-  //   const user = {
-  //     firstName: first_name,
-  //     lastName: last_name,
-  //     username: username!,
-  //     photo: image_url,
-  //   };
+    if (newUser) {
+      await clerkClient.users.updateUserMetadata(id, {
+        publicMetadata: {
+          userId: newUser._id,
+        },
+      });
+    }
 
-  //   const updatedUser = await updateUser(id, user);
+    console.log("works 4");
 
-  //   return NextResponse.json({ message: "OK", user: updatedUser });
-  // }
+    return NextResponse.json({ message: "OK", user: newUser });
+  }
 
-  // if (eventType === "user.deleted") {
-  //   const { id } = evt.data;
+  if (eventType === "user.updated") {
+    const { id, image_url, first_name, last_name, username } = evt.data;
 
-  //   const deletedUser = await deleteUser(id!);
+    const user = {
+      firstName: first_name,
+      lastName: last_name,
+      username: username!,
+      photo: image_url,
+    };
 
-  //   return NextResponse.json({ message: "OK", user: deletedUser });
-  // }
+    const updatedUser = await updateUser(id, user);
+
+    return NextResponse.json({ message: "OK", user: updatedUser });
+  }
+
+  if (eventType === "user.deleted") {
+    const { id } = evt.data;
+
+    const deletedUser = await deleteUser(id!);
+
+    return NextResponse.json({ message: "OK", user: deletedUser });
+  }
 
   return new Response("", { status: 200 });
 }
