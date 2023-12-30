@@ -9,7 +9,7 @@ import MobileNav from "./MobileNav";
 const Header = () => {
   return (
     <header className="w-full borber-b">
-      <div className=" wrapper flex items-center justify-between">
+      <div className="wrapper flex items-center justify-between">
         <Link href="/" className="w-36">
           <Image
             src="/assets/images/logo.svg"
